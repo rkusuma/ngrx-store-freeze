@@ -11,7 +11,8 @@ export function storeFreeze(reducer): ActionReducer<any> {
         deepFreeze(state);
 
         // guard against trying to freeze null or undefined types
-        if (action.payload) {
+        // skip if the payload is File or FileList instance
+        if (action.payload && !(action.payload instanceof File) && !(action.payload instanceof FileList)) {
             deepFreeze(action.payload);
         }
 
